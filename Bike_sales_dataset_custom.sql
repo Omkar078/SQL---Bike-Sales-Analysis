@@ -10,7 +10,8 @@ SELECT
 	p.product_name,
 	pc.category_name,
 	s.store_name,
-	CONCAT(ss.first_name, ' ', ss.last_name) AS 'sales_representative'
+	CONCAT(ss.first_name, ' ', ss.last_name) AS 'sales_representative',
+	pb.brand_name
 FROM sales.orders o
 INNER JOIN sales.customers c
 ON o.customer_id = c.customer_id
@@ -24,6 +25,8 @@ INNER JOIN sales.stores s
 ON o.store_id = s.store_id
 INNER JOIN sales.staffs ss
 ON o.staff_id = ss.staff_id
+INNER JOIN production.brands pb
+ON p.brand_id = pb.brand_id
 GROUP BY
 	o.order_id,
 	CONCAT(c.first_name,' ', c.last_name),
@@ -33,4 +36,5 @@ GROUP BY
 	p.product_name,
 	pc.category_name,
 	s.store_name,
-	CONCAT(ss.first_name, ' ', ss.last_name)
+	CONCAT(ss.first_name, ' ', ss.last_name),
+	pb.brand_name
